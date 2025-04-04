@@ -13,7 +13,6 @@ def createContainerInfo(container_info: ContainerInfo):
         db.refresh(container_info)
         return True
     except Exception as e:
-        print(e.__cause__)
         return False
 
 
@@ -41,3 +40,13 @@ def get_records_gt_hour() -> list[ContainerInfo]:
         .all()
     )
 
+def update_on_termination(container_id: str) -> ContainerInfo:
+    try:
+        container: ContainerInfo = db.query(ContainerInfo).filter(ContainerInfo.container_id == container_id).first()
+        if container:
+            container.container_alive = False
+            db.commit()
+            db.refresh(container)
+            return container
+    except Exception as e:
+        return None
