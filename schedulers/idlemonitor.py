@@ -39,4 +39,4 @@ def checkIdleContainers():
     for container in target_containers:
         terminate_docker_container(container.container_id)
 
-scheduler.add_job(checkIdleContainers, "interval", miniutes = 15)
+scheduler.add_job(checkIdleContainers, "interval", minutes = 15)
